@@ -1,7 +1,7 @@
 import React from 'react';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default CameraPreview = ({ photo, retakePicture, savePhoto }) => {
+export default CameraPreview = ({ photo, retakePicture, savePhoto, closeCamera }) => {
 	console.log('picture data', photo);
 	// var pictureObjectSchema = {
 	// 	height: 2448,
@@ -14,11 +14,14 @@ export default CameraPreview = ({ photo, retakePicture, savePhoto }) => {
 			<ImageBackground source={{ uri: photo && photo.uri }} style={{ flex: 1 }}>
 				<View style={{ flex: 1, flexDirection: 'column', padding: 15, justifyContent: 'flex-end' }}>
 					<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-						<TouchableOpacity onPress={retakePicture} style={{ width: 130, height: 40, alignItems: 'center', borderRadius: 4 }}>
+						<TouchableOpacity onPress={retakePicture} style={{ width: 100, height: 40, alignItems: 'center', borderRadius: 4 }}>
 							<Text style={{ color: '#fff', fontSize: 20 }}>Re-take</Text>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={savePhoto} style={{ width: 130, height: 40, alignItems: 'center', borderRadius: 4 }}>
+						<TouchableOpacity onPress={savePhoto} style={{ width: 100, height: 40, alignItems: 'center', borderRadius: 4 }}>
 							<Text style={{ color: '#fff', fontSize: 20 }}>save photo</Text>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={closeCamera} style={{ width: 100, height: 40, alignItems: 'center', borderRadius: 4 }}>
+							<Text style={{ color: '#fff', fontSize: 20 }}>close camera</Text>
 						</TouchableOpacity>
 					</View>
 				</View>
