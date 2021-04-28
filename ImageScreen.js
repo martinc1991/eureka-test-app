@@ -1,41 +1,42 @@
-import React, { useState, useEffect } from 'react';
 import * as Sharing from 'expo-sharing';
-import { StatusBar } from 'expo-status-bar';
-import { Alert, StyleSheet, Text, TouchableOpacity, View, Dimensions, Image, ScrollView } from 'react-native';
-import * as MediaLibrary from 'expo-media-library';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { uriToID } from './auxiliar';
-var boca = require('./assets/boca.jpg');
+import React from 'react';
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native';
 
 const { height, width } = Dimensions.get('window');
+let imageWidth, imageHeight;
 let orientation = height > width ? 'Portrait' : 'Landscape';
 
-export default function ImageScreen({ route }) {
-	// const { uri, location } = route.params;
+const isIpad = Platform.isPad; // Auxiliar constant because sexpo-sharing is not working on iPads
 
-	const __handleShare = async (url) => {
+export default function ImageScreen({ route }) {
+	const { uri, location } = route.params;
+
+	Image.getSize(uri, () => {
+		imageWidth = width;
+		imageHeight = height;
+		orientation = imageHeight > imageWidth ? 'Portrait' : 'Landscape';
+	});
+
+	const __handleShare = async () => {
+		if (isIpad) return; // Sharing is not working on iPad (https://github.com/expo/expo/labels/Sharing)
 		try {
-			console.log('about to share');
-			console.log('url to share: ', url);
-			// let sharePromise = await Sharing.shareAsync(uri); // * uncomment this
-			console.log(sharePromise);
+			await Sharing.shareAsync(uri);
 		} catch (error) {
 			console.log(error);
+			console.log('\x1b[31m%s\x1b[0m', 'Problem inside __handleShare');
 		}
 	};
 
 	return (
 		<View style={styles.container}>
 			<View style={styles.imageContainer}>
-				<Image source={boca} style={styles.image} />
+				<Image source={uri ? { uri: uri } : require('./assets/placeholder.png')} style={styles.image} />
 			</View>
 			<View style={styles.textContainer}>
-				{/* <Text>{uri}</Text> */}
-				<Text style={styles.text}>Cordoba, Argentina</Text>
+				<Text style={styles.text}>{location || 'Unknown location'}</Text>
 				<TouchableOpacity style={styles.buttonContainer} onPress={__handleShare}>
 					<Text style={styles.buttonText}>Share</Text>
 				</TouchableOpacity>
-				{/* <Text>{location}</Text> */}
 			</View>
 		</View>
 	);
@@ -47,42 +48,38 @@ const styles = StyleSheet.create({
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
-		// backgroundColor: 'red',
 	},
 	imageContainer: {
-		// backgroundColor: 'gold',
 		flex: 6,
-		width,
+		overflow: 'hidden',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
 	},
 	image: {
-		// minHeight: 100,
-		// minWidth: 100,
-		// height: 300,
-		// width: 300,
+		minWidth: width,
+		height: 200,
+		width: 200,
 		flex: 1,
-		resizeMode: 'center',
+		resizeMode: 'cover',
 	},
 	textContainer: {
-		// backgroundColor: 'blue',
 		width,
-		flex: 2,
+		flex: 3,
 		justifyContent: 'space-around',
 		alignItems: 'center',
 	},
 	text: {
-		fontSize: 28,
-		// backgroundColor: 'gold',
+		fontSize: 24,
 		textAlign: 'center',
 	},
 	buttonContainer: {
-		backgroundColor: 'mediumseagreen',
+		height: 40,
+		backgroundColor: '#449c69',
 		borderRadius: 10,
 		justifyContent: 'center',
 		alignItems: 'center',
 		width: 0.7 * width,
-		maxWidth: 500,
+		maxWidth: 300,
 		shadowColor: '#000',
 		shadowOffset: {
 			width: 0,
@@ -93,8 +90,8 @@ const styles = StyleSheet.create({
 		elevation: 2,
 	},
 	buttonText: {
-		lineHeight: 48,
-		fontSize: 24,
+		color: '#fff',
+		fontWeight: 'bold',
 		textAlign: 'center',
 	},
 });
