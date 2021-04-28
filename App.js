@@ -22,20 +22,10 @@ SplashScreen.preventAutoHideAsync().catch(() => {
 export default function App() {
 	return (
 		<NavigationContainer>
-			<AnimatedAppLoader image={{ uri: Asset.fromModule(require('./assets/flexxus.png')).uri }}>
-				<Stack.Navigator initialRouteName='MainScreen' screenOptions={{ headerShown: true, headerTitleAlign: 'center' }}>
-					<Stack.Screen
-						name='ImageScreen'
-						component={ImageScreen}
-						options={{ title: 'ImageScreen' }}
-						options={{
-							headerTitleStyle: {
-								fontWeight: 'bold',
-								height: 80,
-							},
-						}}
-					/>
-					<Stack.Screen name='MainScreen' component={MainScreen} options={{ title: 'MainScreen' }} />
+			<AnimatedAppLoader image={{ uri: Asset.fromModule(require('./assets/eureka.png')).uri }}>
+				<Stack.Navigator initialRouteName='MainScreen' screenOptions={{ headerShown: true, headerTitleAlign: 'center', headerStyle: { backgroundColor: 'mediumseagreen' } }}>
+					<Stack.Screen name='ImageScreen' component={ImageScreen} options={{ title: 'EurekApp - Image' }} />
+					<Stack.Screen name='MainScreen' component={MainScreen} options={{ title: 'EurekApp' }} />
 					{/* <Stack.Screen name='Profile' component={ProfileScreen} /> */}
 					{/* <MainScreen /> */}
 				</Stack.Navigator>
@@ -49,7 +39,7 @@ function AnimatedAppLoader({ children, image }) {
 
 	const startAsync = React.useMemo(
 		// If you use a local image with require(...), use `Asset.fromModule`
-		() => () => Asset.fromModule(require('./assets/flexxus.png')).uri,
+		() => () => Asset.fromModule(require('./assets/eureka.png')).uri,
 		[image]
 	);
 

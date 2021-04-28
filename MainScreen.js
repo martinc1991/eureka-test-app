@@ -227,17 +227,6 @@ export default function MainScreen({ navigation }) {
 		}
 	};
 
-	const __handleShare = async (url) => {
-		try {
-			console.log('about to share');
-			console.log('url to share: ', url);
-			let sharePromise = await Sharing.shareAsync(url);
-			console.log(sharePromise);
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
 	// * Only to make testing easier
 	const createTwoButtonAlert = () =>
 		Alert.alert('Alert Title', 'Are you sure you want to erase all the pictures taken?', [
@@ -337,7 +326,7 @@ export default function MainScreen({ navigation }) {
 						<TouchableOpacity onPress={__startCamera} style={styles.takePictureButton} disabled={!location}>
 							<Text style={{ color: '#fff', fontWeight: 'bold', textAlign: 'center', fontSize: 30, marginBottom: 4 }}>+</Text>
 						</TouchableOpacity>
-						<TouchableOpacity onPress={createTwoButtonAlert} style={{ width: 130, borderRadius: 4, backgroundColor: 'red', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, marginVertical: 5 }}>
+						<TouchableOpacity onPress={createTwoButtonAlert} style={{ width: 130, borderRadius: 4, backgroundColor: 'firebrick', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, marginVertical: 5 }}>
 							<Text style={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>Erase storage</Text>
 						</TouchableOpacity>
 					</View>
@@ -370,7 +359,7 @@ const styles = StyleSheet.create({
 		// backgroundColor: 'grey',
 	},
 	imageGalleryContainer: {
-		// backgroundColor: 'red',
+		// backgroundColor: 'firebrick',
 		maxHeight: width,
 	},
 	bottomContainer: {
