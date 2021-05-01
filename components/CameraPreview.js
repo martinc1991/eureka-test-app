@@ -1,20 +1,15 @@
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import { ImageBackground, StyleSheet, View } from 'react-native';
+import TextButton from './TextButton';
 
-const { height, width } = Dimensions.get('window');
-
-export default CameraPreview = ({ photo, retakePicture, savePhoto, closeCamera }) => {
+export default CameraPreview = ({ photo, retakePicture, savePhoto }) => {
 	return (
-		<View style={{ backgroundColor: 'transparent', flex: 1, width: '100%', height: '100%' }}>
+		<View style={styles.container}>
 			<ImageBackground source={{ uri: photo && photo.uri }} style={{ flex: 1 }}>
-				<View style={{ flex: 1, flexDirection: 'column', padding: 15, justifyContent: 'flex-end' }}>
-					<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-						<TouchableOpacity onPress={retakePicture} style={{ height: 40, backgroundColor: '#449c69', borderRadius: 10, justifyContent: 'center', alignItems: 'center', width: 0.7 * width, maxWidth: '40%', shadowColor: '#000', shadowOffset: { width: 0, height: 1 } }}>
-							<Text style={{ color: '#fff' }}>Try Again</Text>
-						</TouchableOpacity>
-						<TouchableOpacity onPress={savePhoto} style={{ height: 40, backgroundColor: '#449c69', borderRadius: 10, justifyContent: 'center', alignItems: 'center', width: 0.7 * width, maxWidth: '40%', shadowColor: '#000', shadowOffset: { width: 0, height: 1 } }}>
-							<Text style={{ color: '#fff' }}>Save</Text>
-						</TouchableOpacity>
+				<View style={styles.overScreenContainer}>
+					<View style={styles.buttonsContainer}>
+						<TextButton label='Try Again' onPress={retakePicture} />
+						<TextButton label='Save' color='#fed106' onPress={savePhoto} />
 					</View>
 				</View>
 			</ImageBackground>
@@ -24,9 +19,19 @@ export default CameraPreview = ({ photo, retakePicture, savePhoto, closeCamera }
 
 const styles = StyleSheet.create({
 	container: {
+		backgroundColor: 'transparent',
 		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
+		width: '100%',
+		height: '100%',
+	},
+	overScreenContainer: {
+		flex: 1,
+		flexDirection: 'column',
+		padding: 15,
+		justifyContent: 'flex-end',
+	},
+	buttonsContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
 	},
 });

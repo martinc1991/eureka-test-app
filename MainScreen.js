@@ -6,6 +6,9 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { Alert, DevSettings, Dimensions, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CameraPreview from './components/CameraPreview';
+import RoundButton from './components/RoundButton';
+import CameraActionButton from './components/CameraActionButton';
+import TextButton from './components/TextButton';
 
 const platform = Platform.OS;
 
@@ -184,7 +187,7 @@ export default function MainScreen({ navigation }) {
 
 	// * Only to make testing easier (comment for production)
 	const createTwoButtonAlert = () =>
-		Alert.alert('Alert Title', 'Are you sure you want to erase all the pictures taken?', [
+		Alert.alert("You're about to delete all pictures", 'Are you sure you want to erase all the pictures taken?', [
 			{
 				text: 'Cancel',
 				onPress: () => console.log('Cancel Pressed'),
@@ -222,26 +225,18 @@ export default function MainScreen({ navigation }) {
 							}}>
 							<View style={styles.cameraView}>
 								<View style={styles.cameraTopContainer}>
-									{/* Camera options */}
+									{/* Camera actions */}
 									<View style={styles.cameraButtonsContainer}>
-										<TouchableOpacity onPress={__closeCamera} style={{ borderRadius: 50 }}>
-											<Text style={{ fontSize: 30 }}>❌</Text>
-										</TouchableOpacity>
+										<CameraActionButton label='❌' onPress={__closeCamera}></CameraActionButton>
 									</View>
 									<View style={styles.cameraButtonsContainer}>
-										<TouchableOpacity onPress={__handleFlashMode} style={{ backgroundColor: flashMode === 'off' ? '#000' : '#fff', borderRadius: 50, height: 40, width: 40, justifyContent: 'center', alignItems: 'center' }}>
-											<Text style={{ fontSize: 20 }}>⚡️</Text>
-										</TouchableOpacity>
-										<TouchableOpacity onPress={__switchCamera} style={{ marginTop: 20 }}>
-											<Text style={{ fontSize: 30 }}>{cameraType === 'front' ? '🤳' : '📷'}</Text>
-										</TouchableOpacity>
+										<CameraActionButton label='⚡️' backgroundColor={flashMode === 'off' ? '#000' : '#fff'} size={20} onPress={__handleFlashMode}></CameraActionButton>
+										<CameraActionButton label={cameraType === 'front' ? '🤳' : '📷'} onPress={__switchCamera}></CameraActionButton>
 									</View>
 								</View>
-								<View style={{ position: 'absolute', bottom: 0, flexDirection: 'row', flex: 1, width: '100%', padding: 20, justifyContent: 'space-between' }}>
+								<View style={styles.takePictureContainer}>
 									<View style={{ alignSelf: 'center', flex: 1, alignItems: 'center' }}>
-										<TouchableOpacity onPress={__takePicture} style={{ width: 50, height: 50, bottom: 0, borderRadius: 50, backgroundColor: '#449c69', justifyContent: 'center', alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 7 }, shadowOpacity: 0.41, shadowRadius: 9.11, elevation: 14 }}>
-											<Text style={{ fontSize: 20 }}>📷</Text>
-										</TouchableOpacity>
+										<RoundButton onPress={__takePicture} size={70} color='#fed106' label='📷' />
 									</View>
 								</View>
 							</View>
@@ -266,13 +261,9 @@ export default function MainScreen({ navigation }) {
 						</View>
 					</ScrollView>
 					<View style={styles.bottomContainer}>
-						<TouchableOpacity onPress={__startCamera} style={styles.takePictureButton}>
-							<Text style={styles.takePictureButtonText}>+</Text>
-						</TouchableOpacity>
+						<RoundButton onPress={__startCamera} label='+' />
 						{/* Only to make testing easier (comment TouchableOpacity below for production) */}
-						{/* <TouchableOpacity onPress={createTwoButtonAlert} style={styles.eraseAlert}>
-							<Text style={{ color: '#fff', fontWeight: 'bold', textAlign: 'center' }}>Erase storage</Text>
-						</TouchableOpacity> */}
+						{/* <TextButton label='Erase storage' onPress={createTwoButtonAlert} color='firebrick' /> */}
 					</View>
 				</View>
 			)}
@@ -309,6 +300,7 @@ const styles = StyleSheet.create({
 		maxHeight: (width - 24) / 3,
 		marginBottom: 4,
 		marginHorizontal: 2,
+		borderRadius: width * 0.01,
 	},
 	bottomContainer: {
 		position: 'absolute',
@@ -335,49 +327,17 @@ const styles = StyleSheet.create({
 		width: '100%',
 	},
 	cameraButtonsContainer: {
-		justifyContent: 'flex-start',
+		justifyContent: 'space-between',
 		alignItems: 'center',
+		height: 100,
 	},
-	takePictureButton: {
-		width: 50,
-		height: 50,
-		borderRadius: 30,
-		backgroundColor: '#449c69',
+	takePictureContainer: {
+		position: 'absolute',
+		bottom: 0,
 		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 5,
-		},
-		shadowOpacity: 0.34,
-		shadowRadius: 6.27,
-		elevation: 10,
-	},
-	takePictureButtonText: {
-		color: '#fff',
-		fontWeight: 'bold',
-		textAlign: 'center',
-		fontSize: 30,
-		marginBottom: 4,
-	},
-	eraseAlert: {
-		width: 130,
-		borderRadius: 4,
-		backgroundColor: 'firebrick',
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-		height: 40,
-		marginVertical: 5,
-		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 5,
-		},
-		shadowOpacity: 0.34,
-		shadowRadius: 6.27,
-		elevation: 10,
+		flex: 1,
+		width: '100%',
+		padding: 20,
+		justifyContent: 'space-between',
 	},
 });

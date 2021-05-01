@@ -1,6 +1,7 @@
 import * as Sharing from 'expo-sharing';
 import React from 'react';
 import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native';
+import TextButton from './components/TextButton';
 
 const { height, width } = Dimensions.get('window');
 let imageWidth, imageHeight;
@@ -34,9 +35,7 @@ export default function ImageScreen({ route }) {
 			</View>
 			<View style={styles.textContainer}>
 				<Text style={styles.text}>{location || 'Unknown location'}</Text>
-				<TouchableOpacity style={styles.buttonContainer} onPress={__handleShare}>
-					<Text style={styles.buttonText}>Share</Text>
-				</TouchableOpacity>
+				<TextButton label='Share' onPress={__handleShare} />
 			</View>
 		</View>
 	);
@@ -70,28 +69,6 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		fontSize: 24,
-		textAlign: 'center',
-	},
-	buttonContainer: {
-		height: 40,
-		backgroundColor: '#449c69',
-		borderRadius: 10,
-		justifyContent: 'center',
-		alignItems: 'center',
-		width: 0.7 * width,
-		maxWidth: 300,
-		shadowColor: '#000',
-		shadowOffset: {
-			width: 0,
-			height: 1,
-		},
-		shadowOpacity: 0.2,
-		shadowRadius: 1.41,
-		elevation: 2,
-	},
-	buttonText: {
-		color: '#fff',
-		fontWeight: 'bold',
 		textAlign: 'center',
 	},
 });
