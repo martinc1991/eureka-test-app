@@ -8,7 +8,7 @@ import { Alert, DevSettings, Dimensions, Image, Platform, ScrollView, StyleSheet
 import CameraPreview from './components/CameraPreview';
 import RoundButton from './components/RoundButton';
 import CameraActionButton from './components/CameraActionButton';
-import TextButton from './components/TextButton';
+import { Ionicons } from '@expo/vector-icons';
 
 const platform = Platform.OS;
 
@@ -227,16 +227,24 @@ export default function MainScreen({ navigation }) {
 								<View style={styles.cameraTopContainer}>
 									{/* Camera actions */}
 									<View style={styles.cameraButtonsContainer}>
-										<CameraActionButton label='❌' onPress={__closeCamera}></CameraActionButton>
+										<CameraActionButton onPress={__closeCamera}>
+											<Ionicons name='close' size={45} color='firebrick' />
+										</CameraActionButton>
 									</View>
 									<View style={styles.cameraButtonsContainer}>
-										<CameraActionButton label='⚡️' backgroundColor={flashMode === 'off' ? '#000' : '#fff'} size={20} onPress={__handleFlashMode}></CameraActionButton>
-										<CameraActionButton label={cameraType === 'front' ? '🤳' : '📷'} onPress={__switchCamera}></CameraActionButton>
+										<CameraActionButton backgroundColor={flashMode === 'off' ? '#000' : '#fff'} size={20} onPress={__handleFlashMode}>
+											<Ionicons style={{ textAlign: 'center' }} name={flashMode === 'off' ? 'flash-off' : 'flash'} size={32} color='#fed106' />
+										</CameraActionButton>
+										<CameraActionButton onPress={__switchCamera}>
+											<Ionicons style={{ textAlign: 'center' }} name={cameraType === 'front' ? 'camera-reverse' : 'camera-reverse'} size={32} color='#449c69' />
+										</CameraActionButton>
 									</View>
 								</View>
 								<View style={styles.takePictureContainer}>
 									<View style={{ alignSelf: 'center', flex: 1, alignItems: 'center' }}>
-										<RoundButton onPress={__takePicture} size={70} color='#fed106' label='📷' />
+										<RoundButton onPress={__takePicture} size={70} color='#449c69'>
+											<Ionicons style={{ textAlign: 'center' }} name='camera' size={32} color='white' />
+										</RoundButton>
 									</View>
 								</View>
 							</View>
@@ -261,7 +269,9 @@ export default function MainScreen({ navigation }) {
 						</View>
 					</ScrollView>
 					<View style={styles.bottomContainer}>
-						<RoundButton onPress={__startCamera} label='+' />
+						<RoundButton onPress={__startCamera}>
+							<Ionicons style={{ textAlign: 'center' }} name='add' size={32} color='white' />
+						</RoundButton>
 						{/* Only to make testing easier (comment TouchableOpacity below for production) */}
 						{/* <TextButton label='Erase storage' onPress={createTwoButtonAlert} color='firebrick' /> */}
 					</View>

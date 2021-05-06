@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 export default function TextButton({ label, color = '#449c69', textColor = '#fff', onPress }) {
 	const styles = StyleSheet.create({
@@ -18,7 +18,6 @@ export default function TextButton({ label, color = '#449c69', textColor = '#fff
 			},
 			shadowOpacity: 0.3,
 			shadowRadius: 4.65,
-
 			elevation: 8,
 		},
 		buttonText: {

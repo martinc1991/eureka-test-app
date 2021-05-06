@@ -1,13 +1,14 @@
 import * as Sharing from 'expo-sharing';
 import React from 'react';
-import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View, Platform } from 'react-native';
+import { Dimensions, Image, Platform, StyleSheet, Text, View } from 'react-native';
 import TextButton from './components/TextButton';
+import { Ionicons } from '@expo/vector-icons';
 
 const { height, width } = Dimensions.get('window');
 let imageWidth, imageHeight;
 let orientation = height > width ? 'Portrait' : 'Landscape';
 
-const isIpad = Platform.isPad; // Auxiliar constant because sexpo-sharing is not working on iPads
+const isIpad = Platform.isPad; // Auxiliar constant because expo-sharing is not working on iPads
 
 export default function ImageScreen({ route }) {
 	const { uri, location } = route.params;
@@ -34,7 +35,10 @@ export default function ImageScreen({ route }) {
 				<Image source={uri ? { uri: uri } : require('./assets/placeholder.png')} style={styles.image} />
 			</View>
 			<View style={styles.textContainer}>
-				<Text style={styles.text}>{location || 'Unknown location'}</Text>
+				<View style={styles.locationContainer}>
+					<Ionicons name='location' size={38} color='#449c69' />
+					<Text style={styles.text}>{location || 'Unknown location'}</Text>
+				</View>
 				<TextButton label='Share' onPress={__handleShare} />
 			</View>
 		</View>
@@ -67,8 +71,15 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-around',
 		alignItems: 'center',
 	},
+	locationContainer: {
+		flexDirection: 'row',
+		width: '35%',
+		minWidth: 250,
+		alignItems: 'center',
+		justifyContent: 'space-around',
+	},
 	text: {
-		fontSize: 24,
+		fontSize: 20,
 		textAlign: 'center',
 	},
 });

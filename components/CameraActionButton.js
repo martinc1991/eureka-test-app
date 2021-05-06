@@ -1,7 +1,7 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function CameraActionButton({ label = 'icon', backgroundColor = 'transparent', onPress, size = 30 }) {
+export default function CameraActionButton({ backgroundColor = 'transparent', onPress, size = 30, children }) {
 	const styles = StyleSheet.create({
 		buttonContainer: {
 			height: 40,
@@ -19,7 +19,7 @@ export default function CameraActionButton({ label = 'icon', backgroundColor = '
 
 	return (
 		<TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
-			<Text style={styles.buttonText}>{label || 'x'}</Text>
+			{children}
 		</TouchableOpacity>
 	);
 }

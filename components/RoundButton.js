@@ -1,9 +1,7 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
-const { height, width } = Dimensions.get('window');
-
-export default function RoundButton({ label = 'icon', color = '#449c69', textColor = '#fff', onPress, size = 50 }) {
+export default function RoundButton({ color = '#449c69', textColor = '#fff', onPress, size = 50, children }) {
 	const styles = StyleSheet.create({
 		buttonContainer: {
 			width: size,
@@ -30,7 +28,7 @@ export default function RoundButton({ label = 'icon', color = '#449c69', textCol
 
 	return (
 		<TouchableOpacity onPress={onPress} style={styles.buttonContainer}>
-			<Text style={styles.buttonText}>{label || 'a'}</Text>
+			{children}
 		</TouchableOpacity>
 	);
 }
