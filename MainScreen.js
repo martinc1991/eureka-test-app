@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, DevSettings, Dimensions, Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import CameraPreview from './components/CameraPreview';
 import RoundButton from './components/RoundButton';
+import TextButton from './components/TextButton'; // Dont remove
 import CameraActionButton from './components/CameraActionButton';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -228,22 +229,22 @@ export default function MainScreen({ navigation }) {
 									{/* Camera actions */}
 									<View style={styles.cameraButtonsContainer}>
 										<CameraActionButton onPress={__closeCamera}>
-											<Ionicons name='close' size={45} color='firebrick' />
+											<Ionicons style={{ textAlign: 'center' }} name='close' size={28} color='firebrick' />
 										</CameraActionButton>
 									</View>
 									<View style={styles.cameraButtonsContainer}>
 										<CameraActionButton backgroundColor={flashMode === 'off' ? '#000' : '#fff'} size={20} onPress={__handleFlashMode}>
-											<Ionicons style={{ textAlign: 'center' }} name={flashMode === 'off' ? 'flash-off' : 'flash'} size={32} color='#fed106' />
+											<Ionicons style={{ textAlign: 'center' }} name={flashMode === 'off' ? 'flash-off' : 'flash'} size={24} color='#fed106' />
 										</CameraActionButton>
 										<CameraActionButton onPress={__switchCamera}>
-											<Ionicons style={{ textAlign: 'center' }} name={cameraType === 'front' ? 'camera-reverse' : 'camera-reverse'} size={32} color='#449c69' />
+											<Ionicons style={{ textAlign: 'center' }} name={cameraType === 'front' ? 'camera-reverse' : 'camera-reverse'} size={28} color='#449c69' />
 										</CameraActionButton>
 									</View>
 								</View>
 								<View style={styles.takePictureContainer}>
 									<View style={{ alignSelf: 'center', flex: 1, alignItems: 'center' }}>
-										<RoundButton onPress={__takePicture} size={70} color='#449c69'>
-											<Ionicons style={{ textAlign: 'center' }} name='camera' size={32} color='white' />
+										<RoundButton onPress={__takePicture} size={60} color='#449c69'>
+											<Ionicons style={{ textAlign: 'center' }} name='camera' size={28} color='white' />
 										</RoundButton>
 									</View>
 								</View>
@@ -254,6 +255,9 @@ export default function MainScreen({ navigation }) {
 			) : (
 				<View>
 					<ScrollView style={styles.picturesContainer} contentContainerStyle={styles.picturesContentContainer}>
+						<View>
+							<Text>Your current Location is: {location}</Text>
+						</View>
 						<View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 6 }}>
 							{picturesFromStorage ? (
 								picturesFromStorage.map((pictureElement, key) => {

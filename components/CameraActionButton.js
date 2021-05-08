@@ -11,10 +11,6 @@ export default function CameraActionButton({ backgroundColor = 'transparent', on
 			alignContent: 'center',
 			justifyContent: 'center',
 		},
-		buttonText: {
-			fontSize: size,
-			textAlign: 'center',
-		},
 	});
 
 	return (
