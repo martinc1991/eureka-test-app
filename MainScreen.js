@@ -16,7 +16,7 @@ const platform = Platform.OS;
 const { height, width } = Dimensions.get('window');
 let appAlbum;
 let camera;
-// let idLocationMap = new Map();
+
 let storageKeys;
 export default function MainScreen({ navigation }) {
 	const [startCamera, setStartCamera] = useState(false);
@@ -55,15 +55,17 @@ export default function MainScreen({ navigation }) {
 			let LKP = await Location.getLastKnownPositionAsync({ maxAge: 1 * 1000 * 60 * 30, requiredAccuracy: 1000 });
 			let LKP_latitude = LKP?.coords.latitude;
 			let LKP_longitude = LKP?.coords.longitude;
+
 			if (LKP_latitude && LKP_longitude) {
 				LKP = await Location.reverseGeocodeAsync({ latitude: LKP_latitude, longitude: LKP_longitude });
 				setLocation(LKP[0]?.city + ', ' + LKP[0]?.country);
+			} else {
+				LKP = await Location.getCurrentPositionAsync({});
+				LKP_latitude = LKP.coords.latitude;
+				LKP_longitude = LKP.coords.longitude;
+				LKP = await Location.reverseGeocodeAsync({ latitude: LKP_latitude, longitude: LKP_longitude });
+				setLocation(LKP[0]?.city + ', ' + LKP[0]?.country);
 			}
-			LKP = await Location.getCurrentPositionAsync({});
-			LKP_latitude = LKP.coords.latitude;
-			LKP_longitude = LKP.coords.longitude;
-			LKP = await Location.reverseGeocodeAsync({ latitude: LKP_latitude, longitude: LKP_longitude });
-			setLocation(LKP[0]?.city + ', ' + LKP[0]?.country);
 			return;
 		} catch (error) {
 			console.log(error);
@@ -255,10 +257,7 @@ export default function MainScreen({ navigation }) {
 			) : (
 				<View>
 					<ScrollView style={styles.picturesContainer} contentContainerStyle={styles.picturesContentContainer}>
-						<View>
-							<Text>Your current Location is: {location}</Text>
-						</View>
-						<View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 6 }}>
+						<View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: 6, paddingBottom: 100 }}>
 							{picturesFromStorage ? (
 								picturesFromStorage.map((pictureElement, key) => {
 									return (
